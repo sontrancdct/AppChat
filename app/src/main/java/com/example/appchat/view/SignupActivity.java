@@ -88,14 +88,12 @@ public class SignupActivity extends AppCompatActivity {
             }
          });
    }
-
    private void signUpAccount() {
 
       Account account = new Account();
       account.setUserName(edtUsername.getText().toString());
       account.setPassword(edtPassword.getText().toString());
       account.setAvatar("default");
-
 
       FirebaseDatabase.getInstance().getReference()
          .child("Account")

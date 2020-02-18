@@ -83,7 +83,6 @@ public class ChatsGrActivity extends AppCompatActivity {
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                if (dataSnapshot.exists()){
                   ChatGroup chatGroup = dataSnapshot.getValue(ChatGroup.class);
-
                   chatGroups.add(chatGroup);
                   groupsChatAdapter.notifyItemInserted(chatGroups.size() - 1);
                }
@@ -156,7 +155,6 @@ public class ChatsGrActivity extends AppCompatActivity {
          .child(room.getId())
          .child(time + "")
          .setValue(chatGroup);
-
       edtMessage.setText("");
    }
 

@@ -2,7 +2,6 @@ package com.example.appchat.view;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +9,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.example.appchat.R;
 import com.example.appchat.model.Account;
 import com.google.firebase.database.DataSnapshot;
@@ -21,9 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 public class SigninActivity extends AppCompatActivity {
 
    private EditText edtUsername,edtPassword;
-
    private ProgressDialog loadingBar;
-
 
    @Override
    protected void onCreate(Bundle savedInstanceState) {
@@ -49,12 +45,10 @@ public class SigninActivity extends AppCompatActivity {
       loadingBar.setCanceledOnTouchOutside(true);
       loadingBar.show();
 
-
       if (TextUtils.isEmpty(edtUsername.getText())){
          Toast.makeText(this, "You have not entered your account name", Toast.LENGTH_SHORT).show();
          return;
       }
-
       if (TextUtils.isEmpty(edtPassword.getText())){
          Toast.makeText(this, "You have not entered the password", Toast.LENGTH_SHORT).show();
          return;

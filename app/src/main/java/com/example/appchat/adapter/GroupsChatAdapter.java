@@ -1,30 +1,24 @@
 package com.example.appchat.adapter;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.example.appchat.Constants;
 import com.example.appchat.R;
 import com.example.appchat.model.Account;
 import com.example.appchat.model.ChatGroup;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class GroupsChatAdapter extends RecyclerView.Adapter<GroupsChatAdapter.ViewHolder> {
 
    private static final int TYPE_SEND_MESSAGE = 1;
    private static final int TYPE_SEND_PICTURE = 2;
-
    private static final int TYPE_RECEIVE_MESSAGE = 3;
    private static final int TYPE_RECEIVE_PICTURE = 4;
 
@@ -37,7 +31,6 @@ public class GroupsChatAdapter extends RecyclerView.Adapter<GroupsChatAdapter.Vi
       this.chatGroups = chatGroups;
       this.account = account;
    }
-
    @NonNull
    @Override
    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

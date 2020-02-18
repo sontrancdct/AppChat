@@ -51,6 +51,7 @@ public class ProfileActivity extends AppCompatActivity {
    private CircleImageView imageViewProfile;
    private TextView tvUsername;
    private ProgressDialog loadingBar;
+   private Toolbar toolbar;
 
    DatabaseReference databaseReference;
    StorageReference storageReference;
@@ -66,7 +67,7 @@ public class ProfileActivity extends AppCompatActivity {
 
       loadingBar = new ProgressDialog(this);
 
-      Toolbar toolbar = findViewById(R.id.toolbar);
+      toolbar = findViewById(R.id.toolbar);
       setSupportActionBar(toolbar);
       getSupportActionBar().setTitle("Profile");
       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -117,7 +118,6 @@ public class ProfileActivity extends AppCompatActivity {
       if(requestCode == IMAGE_REQUEST && resultCode == RESULT_OK && data!=null)
       {
          imageUri = data.getData();
-
          CropImage.activity()
             .setGuidelines(CropImageView.Guidelines.ON)
             .setAspectRatio(1,1)
@@ -176,7 +176,6 @@ public class ProfileActivity extends AppCompatActivity {
 
       }
    }
-
    private void SendUserToActivityMain() {
       Intent intent = new Intent(ProfileActivity.this, HomeActivity.class);
       intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

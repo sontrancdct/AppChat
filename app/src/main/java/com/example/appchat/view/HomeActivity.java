@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -18,12 +17,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.example.appchat.R;
 import com.example.appchat.adapter.GroupsListAdapter;
 import com.example.appchat.model.Account;
 import com.example.appchat.model.Room;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -34,34 +31,39 @@ import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity {
    private Toolbar toolbar;
-
    private RecyclerView recyclerRoom;
    private Account myAccount;
    private GroupsListAdapter groupsListAdapter;
    private ArrayList<Room> rooms = new ArrayList<>();
    private AlertDialog alertDialog;
 
-   private FirebaseAuth mAuth;
-
    @Override
    protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
       setContentView(R.layout.activity_home);
 
-      toolbar = findViewById(R.id.main_page_toolbar);
-      setSupportActionBar(toolbar);
-      getSupportActionBar().setTitle("AppChat");
+      setToolbar();
+      getIntentData();
+      setRecyclerRoom();
+      getRoomList();
 
-      myAccount = (Account) getIntent().getSerializableExtra("Account");
-
+   }
+   private void setRecyclerRoom() {
       recyclerRoom = findViewById(R.id.recyclerRoom);
       recyclerRoom.setHasFixedSize(true);
       recyclerRoom.setLayoutManager(new LinearLayoutManager(this));
       groupsListAdapter = new GroupsListAdapter(rooms,myAccount);
       recyclerRoom.setAdapter(groupsListAdapter);
+   }
 
-      getRoomList();
+   private void getIntentData() {
+      myAccount = (Account) getIntent().getSerializableExtra("Account");
+   }
 
+   private void setToolbar() {
+      toolbar = findViewById(R.id.main_page_toolbar);
+      setSupportActionBar(toolbar);
+      getSupportActionBar().setTitle("AppChat");
    }
 
    private void getRoomList() {
@@ -109,7 +111,8 @@ public class HomeActivity extends AppCompatActivity {
       final EditText edtRoomName = container.findViewById(R.id.edtRoomName);
       Button btnCreate = container.findViewById(R.id.btnCreate);
 
-      btnCreate.setOnClickListener(new View.OnClickListener() {
+      btnCreate.setOnClickListener(new View.OnClickListener()
+      {
          @Override
          public void onClick(View v) {
             if (TextUtils.isEmpty(edtRoomName.getText())){
@@ -124,7 +127,6 @@ public class HomeActivity extends AppCompatActivity {
    }
    private void createGroups(String groupsName) {
       String id = System.currentTimeMillis() + "";
-
       final Room room = new Room();
       room.setId(id);
       room.setName(groupsName);
@@ -138,16 +140,12 @@ public class HomeActivity extends AppCompatActivity {
             public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
                if (databaseError == null){
                   Toast.makeText(HomeActivity.this, "Created groups successfully", Toast.LENGTH_SHORT).show();
-
-                  if (alertDialog != null){
+                  if (alertDialog != null)
+                  {
                      if (alertDialog.isShowing()){
                         alertDialog.cancel();
                      }
                   }
-//                  Intent intent = new Intent(getContext(), ChatGroupsActivity.class);
-//                  intent.putExtra("Room",room);
-//                  intent.putExtra("Users", (Parcelable) user);
-//                  startActivity(intent);
                }else {
                   Toast.makeText(HomeActivity.this, "Error !!!", Toast.LENGTH_SHORT).show();
                }
@@ -157,7 +155,6 @@ public class HomeActivity extends AppCompatActivity {
    @Override
    public boolean onCreateOptionsMenu(Menu menu) {
       super.onCreateOptionsMenu(menu);
-
       getMenuInflater().inflate(R.menu.options_menu, menu);
       return true;
    }
