@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   android:orientation="vertical"
+   android:layout_width="match_parent"
+   android:layout_height="match_parent"
+   >
+
+   <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal">
+   <de.hdodenhof.circleimageview.CircleImageView
+      android:layout_width="50dp"
+      android:layout_height="50dp"
+      android:layout_marginTop="10dp"
+      android:src="@drawable/profile_image"
+      android:id="@+id/message_profile_image"/>
+
+      <TextView
+         android:id="@+id/receive_message"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:background="@drawable/receive_message_layout"
+         android:text="receiver messager here"
+         android:padding="10dp"
+         android:textSize="14dp"
+         android:layout_marginTop="10dp"
+         android:textColor="#111111"/>
+
+   </LinearLayout>
+</LinearLayout>

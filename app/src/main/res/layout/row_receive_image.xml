@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   android:orientation="vertical"
+   android:layout_width="match_parent"
+   android:layout_height="wrap_content">
+   <LinearLayout
+      android:orientation="horizontal"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="5dp"
+      android:layout_marginLeft="5dp">
+      <de.hdodenhof.circleimageview.CircleImageView
+         android:layout_gravity="top"
+         android:id="@+id/item_profile_image"
+         android:layout_width="45dp"
+         android:layout_height="45dp"
+         android:layout_marginTop="20dp"
+         android:src="@drawable/profile_image" />
+      <LinearLayout
+         android:orientation="vertical"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginLeft="10dp"
+         android:layout_marginRight="80dp"
+         android:layout_marginEnd="80dp"
+         android:layout_marginStart="10dp">
+         <TextView
+            android:text="username"
+            android:textColor="#f12"
+            android:id="@+id/txtusername"
+            android:textSize="12sp"
+            android:layout_marginLeft="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+         <ImageView
+            android:id="@+id/imgPicture"
+            android:layout_width="300dp"
+            android:layout_height="400dp"
+            android:src="#111"
+            android:scaleType="centerCrop"
+            android:layout_marginTop="3dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp" />
+         <TextView
+            android:id="@+id/txtDate"
+            android:textSize="12sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12:15 AM"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp" />
+      </LinearLayout>
+</LinearLayout>
+</LinearLayout>
