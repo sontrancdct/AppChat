@@ -4,11 +4,14 @@
    android:layout_width="match_parent"
    android:layout_height="match_parent"
    android:orientation="vertical">
-   <include
-      android:id="@+id/toolbar"
-      layout="@layout/app_bar_layout"/>
+   <androidx.appcompat.widget.Toolbar
+      android:layout_width="match_parent"
+      android:layout_height="40dp"
+      app:title=""
+      android:background="#3F51B5"
+      android:id="@+id/toolBar"
+      android:layout_gravity="top"/>
    <de.hdodenhof.circleimageview.CircleImageView
-      android:layout_below="@id/toolbar"
       android:id="@+id/set_profile_image"
       android:layout_width="250dp"
       android:layout_height="250dp"
@@ -17,7 +20,7 @@
       app:civ_border_color="@color/colorPrimary"
       android:layout_alignParentTop="true"
       android:layout_centerHorizontal="true"
-      android:layout_marginTop="60dp"/>
+      android:layout_marginTop="100dp"/>
    <TextView
       android:layout_marginTop="30dp"
       android:layout_below="@id/set_profile_image"

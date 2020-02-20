@@ -6,8 +6,9 @@
    android:layout_height="match_parent">
       <androidx.appcompat.widget.Toolbar
          android:layout_width="match_parent"
-         android:layout_height="?attr/actionBarSize"
+         android:layout_height="40dp"
          app:title=""
+         app:titleTextColor="#ffffff"
          android:background="#3F51B5"
          android:id="@+id/toolBar"
          android:layout_gravity="top">

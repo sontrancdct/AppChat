@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   xmlns:app="http://schemas.android.com/apk/res-auto"
+   xmlns:tools="http://schemas.android.com/tools"
+   android:layout_width="match_parent"
+   android:layout_height="match_parent"
+   android:orientation="vertical"
+   tools:context=".view.PlayMesageActivity">
+
+   <androidx.appcompat.widget.Toolbar
+      android:layout_width="match_parent"
+      android:layout_height="40dp"
+      app:title=""
+      android:background="#3F51B5"
+      android:id="@+id/toolBar"
+      android:layout_gravity="top">
+   </androidx.appcompat.widget.Toolbar>
+   <TextView
+      android:textStyle="bold"
+      android:text=""
+      android:textSize="20sp"
+      android:layout_gravity="center"
+      android:id="@+id/tv_play"
+      android:layout_width="30sp"
+      android:layout_height="30sp"/>
+      <androidx.recyclerview.widget.RecyclerView
+         android:id="@+id/recyclerPlayMessage"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:clipToPadding="true"
+         />
+</LinearLayout>

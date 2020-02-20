@@ -1,5 +1,4 @@
-package com.example.appchat.view;
-
+package com.example.appchat.login;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
@@ -11,12 +10,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 import com.example.appchat.R;
 import com.example.appchat.model.Account;
+import com.example.appchat.view.HomeActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class SigninActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
    private EditText edtUsername,edtPassword;
    private ProgressDialog loadingBar;
@@ -24,7 +24,7 @@ public class SigninActivity extends AppCompatActivity {
    @Override
    protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
-      setContentView(R.layout.activity_signin);
+      setContentView(R.layout.activity_login);
 
       initView();
    }
@@ -35,22 +35,19 @@ public class SigninActivity extends AppCompatActivity {
    }
 
    public void onClickSignup(View view) {
-      startActivity(new Intent(this,SignupActivity.class));
+      startActivity(new Intent(this, SignupActivity.class));
    }
 
    public void onClickLogin(View view) {
-      loadingBar = new ProgressDialog(SigninActivity.this);
+      loadingBar = new ProgressDialog(LoginActivity.this);
       loadingBar.setTitle("Sign In...");
       loadingBar.setMessage("Please wait...");
       loadingBar.setCanceledOnTouchOutside(true);
       loadingBar.show();
 
-      if (TextUtils.isEmpty(edtUsername.getText())){
-         Toast.makeText(this, "You have not entered your account name", Toast.LENGTH_SHORT).show();
-         return;
-      }
-      if (TextUtils.isEmpty(edtPassword.getText())){
-         Toast.makeText(this, "You have not entered the password", Toast.LENGTH_SHORT).show();
+      if (TextUtils.isEmpty(edtUsername.getText()) ||TextUtils.isEmpty(edtPassword.getText())){
+         Toast.makeText(this, "Please complete all information", Toast.LENGTH_SHORT).show();
+         loadingBar.dismiss();
          return;
       }
       FirebaseDatabase.getInstance().getReference()
@@ -60,26 +57,25 @@ public class SigninActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                if (!dataSnapshot.exists()){
-                  Toast.makeText(SigninActivity.this, "Account not exists", Toast.LENGTH_SHORT).show();
+                  Toast.makeText(LoginActivity.this, "Account not exists", Toast.LENGTH_SHORT).show();
                   loadingBar.dismiss();
                   return;
                }
                Account account = dataSnapshot.getValue(Account.class);
                if (!account.getPassword().equals(edtPassword.getText().toString())){
-                  Toast.makeText(SigninActivity.this, "Password Incorrect", Toast.LENGTH_SHORT).show();
+                  Toast.makeText(LoginActivity.this, "Password Incorrect", Toast.LENGTH_SHORT).show();
                   loadingBar.dismiss();
                   return;
                }
-               Toast.makeText(SigninActivity.this, "Login success", Toast.LENGTH_SHORT).show();
+               Toast.makeText(LoginActivity.this, "Login success", Toast.LENGTH_SHORT).show();
                loadingBar.dismiss();
 
-               Intent intent = new Intent(SigninActivity.this, HomeActivity.class);
+               Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                intent.putExtra("Account", account);
                startActivity(intent);
                finish();
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 

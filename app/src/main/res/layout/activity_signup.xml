@@ -1,42 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-   xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
    android:layout_width="match_parent"
    android:layout_height="match_parent"
+   android:background="@drawable/gradient_background"
    android:orientation="vertical">
-   <include
-      android:id="@+id/toolbar"
-      layout="@layout/app_bar_layout"/>
 
    <TextView
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:gravity="center"
-      android:text="SignUp"
-      android:textColor="#111"
-      android:textSize="25sp"
+      android:text="Register"
+      android:textColor="#009688"
+      android:textSize="30sp"
       android:textStyle="bold"
       android:layout_marginTop="30dp"/>
+   <LinearLayout
+      android:layout_marginTop="20dp"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal">
+      <TextView
+         android:textStyle="bold"
+         android:textColor="#3F51B5"
+         android:layout_marginLeft="10dp"
+         android:textSize="16sp"
+         android:text="Username"
+         android:layout_width="80dp"
+         android:layout_height="wrap_content"/>
    <EditText
       android:id="@+id/edtUsername"
       android:layout_width="match_parent"
       android:layout_height="40dp"
       android:hint="Username..."
-      android:textColor="#111"
-      android:layout_marginTop="20dp"
+      android:textColor="#ffffff"
       android:layout_marginStart="20dp"
       android:layout_marginEnd="20dp"
       android:paddingStart="15dp"
       android:paddingEnd="15dp"
       android:singleLine="true"
       android:background="@drawable/ic_custom_edittext"/>
+   </LinearLayout>
+   <LinearLayout
+      android:layout_marginTop="20dp"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal">
+      <TextView
+         android:textStyle="bold"
+         android:textColor="#3F51B5"
+         android:layout_marginLeft="10dp"
+         android:textSize="16sp"
+         android:text="Password"
+         android:layout_width="80dp"
+         android:layout_height="wrap_content"/>
    <EditText
       android:id="@+id/edtPassword"
       android:layout_width="match_parent"
       android:layout_height="40dp"
       android:hint="Password..."
-      android:textColor="#111"
-      android:layout_marginTop="10dp"
+      android:textColor="#ffffff"
       android:layout_marginStart="20dp"
       android:layout_marginEnd="20dp"
       android:paddingStart="15dp"
@@ -44,13 +66,26 @@
       android:singleLine="true"
       android:inputType="textPassword"
       android:background="@drawable/ic_custom_edittext"/>
+   </LinearLayout>
+   <LinearLayout
+      android:layout_marginTop="20dp"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal">
+      <TextView
+         android:textStyle="bold"
+         android:textColor="#3F51B5"
+         android:layout_marginLeft="10dp"
+         android:textSize="16sp"
+         android:text="Password"
+         android:layout_width="80dp"
+         android:layout_height="wrap_content"/>
    <EditText
       android:id="@+id/edtRePassword"
       android:layout_width="match_parent"
       android:layout_height="40dp"
       android:hint="Enter the password..."
-      android:textColor="#111"
-      android:layout_marginTop="10dp"
+      android:textColor="#ffffff"
       android:layout_marginStart="20dp"
       android:layout_marginEnd="20dp"
       android:paddingStart="15dp"
@@ -58,14 +93,23 @@
       android:singleLine="true"
       android:inputType="textPassword"
       android:background="@drawable/ic_custom_edittext"/>
+   </LinearLayout>
    <Button
       android:onClick="onClickSignup"
       android:layout_width="match_parent"
       android:layout_height="40dp"
       android:text="Register now"
       android:textColor="#fff"
-      android:layout_marginTop="10dp"
+      android:layout_marginTop="20dp"
       android:layout_marginStart="20dp"
       android:layout_marginEnd="20dp"
       android:background="@drawable/ic_custom_button" />
+   <TextView
+      android:id="@+id/have_account"
+      android:textSize="15sp"
+      android:layout_marginTop="20dp"
+      android:gravity="center"
+      android:text="You have Account...?"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"/>
 </LinearLayout>

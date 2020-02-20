@@ -19,6 +19,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 import com.example.appchat.R;
 import com.example.appchat.adapter.GroupsListAdapter;
+import com.example.appchat.login.ProfileActivity;
+import com.example.appchat.login.LoginActivity;
 import com.example.appchat.model.Account;
 import com.example.appchat.model.Room;
 import com.google.firebase.database.ChildEventListener;
@@ -48,6 +50,24 @@ public class HomeActivity extends AppCompatActivity {
       getRoomList();
 
    }
+   @Override
+   protected void onStart() {
+      super.onStart();
+      if(myAccount == null)
+      {
+         GoToLogin();
+      }
+      else
+      {
+         VerifyUserExistance();
+      }
+   }
+   private void VerifyUserExistance() {
+
+   }
+   private void GoToLogin() {
+      startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+   }
    private void setRecyclerRoom() {
       recyclerRoom = findViewById(R.id.recyclerRoom);
       recyclerRoom.setHasFixedSize(true);
@@ -61,7 +81,7 @@ public class HomeActivity extends AppCompatActivity {
    }
 
    private void setToolbar() {
-      toolbar = findViewById(R.id.main_page_toolbar);
+      toolbar = findViewById(R.id.toolBar);
       setSupportActionBar(toolbar);
       getSupportActionBar().setTitle("AppChat");
    }
@@ -130,7 +150,6 @@ public class HomeActivity extends AppCompatActivity {
       final Room room = new Room();
       room.setId(id);
       room.setName(groupsName);
-
       FirebaseDatabase.getInstance().getReference()
          .child("GroupsList")
          .child(myAccount.getUserName())
@@ -160,29 +179,53 @@ public class HomeActivity extends AppCompatActivity {
    }
    @Override
    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
       switch (item.getItemId()){
+         case R.id.addGroups:
+            addGroups();
+            return true;
          case R.id.profile:
             GoToProfile();
             return true;
          case R.id.logout:
             GoToLogout();
             return true;
-
             default:
                return super.onOptionsItemSelected(item);
       }
    }
 
-   private void GoToLogout() {
+   private void addGroups() {
+      AlertDialog.Builder builder = new AlertDialog.Builder(this);
+      View container = LayoutInflater.from(this).inflate(R.layout.dialog_add_groups,null);
+      builder.setView(container);
+      alertDialog = builder.create();
+
+      final EditText edtRoomName = container.findViewById(R.id.edtRoomName);
+      Button btnCreate = container.findViewById(R.id.btnCreate);
+
+      btnCreate.setOnClickListener(new View.OnClickListener()
+      {
+         @Override
+         public void onClick(View v) {
+            if (TextUtils.isEmpty(edtRoomName.getText())){
+               Toast.makeText(HomeActivity.this, "Please enter name groups...", Toast.LENGTH_SHORT).show();
+               return;
+            }
+            createGroups(edtRoomName.getText().toString());
+         }
+      });
+      alertDialog.show();
    }
 
-   private void GoToProfile() {
-      Intent profile = new Intent(HomeActivity.this,ProfileActivity.class);
+   private void GoToLogout() {
+      Intent profile = new Intent(HomeActivity.this, LoginActivity.class);
       profile.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+      startActivity(profile);
+   }
+   private void GoToProfile() {
+      Intent profile = new Intent(HomeActivity.this, ProfileActivity.class);
+      //profile.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
       profile.putExtra("Account",myAccount);
       startActivity(profile);
-      finish();
    }
-
 }

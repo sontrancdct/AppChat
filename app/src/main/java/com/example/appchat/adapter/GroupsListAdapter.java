@@ -10,6 +10,8 @@ import com.example.appchat.R;
 import com.example.appchat.model.Account;
 import com.example.appchat.model.Room;
 import com.example.appchat.view.ChatsGrActivity;
+import com.example.appchat.view.PlayMesageActivity;
+
 import java.util.ArrayList;
 
 public class GroupsListAdapter extends RecyclerView.Adapter<GroupsListAdapter.ViewHolder> {
@@ -40,6 +42,17 @@ public class GroupsListAdapter extends RecyclerView.Adapter<GroupsListAdapter.Vi
             intent.putExtra("GroupsList",rooms.get(position));
             intent.putExtra("Account", account);
             v.getContext().startActivity(intent);
+         }
+      });
+
+      holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+         @Override
+         public boolean onLongClick(View v) {
+            Intent intent = new Intent(v.getContext(), PlayMesageActivity.class);
+            intent.putExtra("GroupsList",rooms.get(position));
+            intent.putExtra("Account", account);
+            v.getContext().startActivity(intent);
+            return true;
          }
       });
    }

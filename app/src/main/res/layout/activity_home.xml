@@ -1,24 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-   xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
    android:layout_width="match_parent"
    android:layout_height="match_parent"
+   xmlns:app="http://schemas.android.com/apk/res-auto"
    android:orientation="vertical"
    android:gravity="center_horizontal">
-   <include android:id="@+id/main_page_toolbar"
-      layout="@layout/app_bar_layout">
-   </include>
-   <Button
-      android:onClick="onClickAddRoom"
-      android:layout_width="250dp"
+   <androidx.appcompat.widget.Toolbar
+
+      app:titleTextColor="#ffffff"
+      android:layout_width="match_parent"
       android:layout_height="40dp"
-      android:text="Create Groups"
-      android:background="@drawable/ic_custom_button"
-      android:textColor="#fff"
-      android:layout_marginTop="30dp"/>
+      android:background="#3F51B5"
+      android:id="@+id/toolBar"
+      android:layout_gravity="top">
+   </androidx.appcompat.widget.Toolbar>
    <androidx.recyclerview.widget.RecyclerView
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:layout_marginTop="30dp"
       android:id="@+id/recyclerRoom"/>
 </LinearLayout>

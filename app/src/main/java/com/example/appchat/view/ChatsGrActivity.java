@@ -85,6 +85,7 @@ public class ChatsGrActivity extends AppCompatActivity {
                   ChatGroup chatGroup = dataSnapshot.getValue(ChatGroup.class);
                   chatGroups.add(chatGroup);
                   groupsChatAdapter.notifyItemInserted(chatGroups.size() - 1);
+                  recyclerMessage.smoothScrollToPosition(chatGroups.size() - 1);
                }
             }
 
@@ -112,7 +113,9 @@ public class ChatsGrActivity extends AppCompatActivity {
 
    private void createRecycler() {
       recyclerMessage.setHasFixedSize(true);
-      recyclerMessage.setLayoutManager(new LinearLayoutManager(this,RecyclerView.VERTICAL,false));
+      LinearLayoutManager ll = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
+      ll.setStackFromEnd(true);
+      recyclerMessage.setLayoutManager(ll);
       groupsChatAdapter = new GroupsChatAdapter(chatGroups,myAccount);
       recyclerMessage.setAdapter(groupsChatAdapter);
    }

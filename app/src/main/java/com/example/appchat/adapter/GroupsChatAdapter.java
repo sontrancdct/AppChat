@@ -1,16 +1,24 @@
 package com.example.appchat.adapter;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.appchat.Constants;
 import com.example.appchat.R;
 import com.example.appchat.model.Account;
 import com.example.appchat.model.ChatGroup;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -54,7 +62,7 @@ public class GroupsChatAdapter extends RecyclerView.Adapter<GroupsChatAdapter.Vi
    }
    class ViewHolder extends RecyclerView.ViewHolder{
       TextView txtMessage,txtDate, txtusername;
-      ImageView imgPicture;
+      ImageView imgPicture, delete;
       CircleImageView avatar;
 
       ViewHolder(@NonNull View itemView,int type) {
@@ -62,6 +70,7 @@ public class GroupsChatAdapter extends RecyclerView.Adapter<GroupsChatAdapter.Vi
          txtDate     = itemView.findViewById(R.id.txtDate);
          txtusername = itemView.findViewById(R.id.txtusername);
          avatar      = itemView.findViewById(R.id.item_profile_image);
+         delete      = itemView.findViewById(R.id.delete_item_mesage);
 
          switch (type){
             case TYPE_SEND_MESSAGE:
@@ -76,7 +85,7 @@ public class GroupsChatAdapter extends RecyclerView.Adapter<GroupsChatAdapter.Vi
       }
    }
    @Override
-   public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+   public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
       String time = formatter.format(chatGroups.get(position).getDate());
       holder.txtDate.setText(time);
       holder.txtusername.setText(chatGroups.get(position).getUserName());
@@ -94,7 +103,56 @@ public class GroupsChatAdapter extends RecyclerView.Adapter<GroupsChatAdapter.Vi
             .load(chatGroups.get(position).getPath())
             .into(holder.imgPicture);
       }
+      if (chatGroups.get(position).isChecked()){
+         holder.delete.setVisibility(View.VISIBLE);
+      }else {
+         holder.delete.setVisibility(View.GONE);
+      }
+      holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+         @Override
+         public boolean onLongClick(View v) {
+            if (chatGroups.get(position).isChecked()) {
+               chatGroups.get(position).setChecked(false);
+               notifyItemChanged(position);
+            }else {
+               setCheckedOff();
+               chatGroups.get(position).setChecked(true);
+               notifyItemChanged(position);
+            }
+            return false;
+         }
+      });
+//      holder.delete.setOnClickListener(new View.OnClickListener() {
+//         @Override
+//         public void onClick(View v) {
+//            final DatabaseReference databaseReference = null;
+//            FirebaseDatabase.getInstance().getReference()
+//               .child("GroupsList")
+//               .child(account.getUserName())
+//               .addListenerForSingleValueEvent(new ValueEventListener() {
+//                  @Override
+//                  public void onDataChange(DataSnapshot dataSnapshot) {
+//                     databaseReference.child(account.getUserName()).removeValue();
+//                  }
+//
+//                  @Override
+//                  public void onCancelled(DatabaseError databaseError) {
+//
+//                  }
+//               });
+//         }
+//      });
    }
+
+   private void setCheckedOff(){
+      for (int i= 0; i<chatGroups.size(); i++){
+         if (chatGroups.get(i).isChecked()){
+            chatGroups.get(i).setChecked(false);
+            notifyItemChanged(i);
+         }
+      }
+   }
+
    @Override
    public int getItemCount() {
       return chatGroups.size();

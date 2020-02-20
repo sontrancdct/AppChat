@@ -15,19 +15,22 @@
       android:supportsRtl="true"
       android:theme="@style/AppTheme"
       tools:ignore="GoogleAppIndexingWarning">
-      <activity android:name=".view.ProfileActivity" />
-      <activity android:name=".view.HomeActivity" />
-      <activity android:name=".view.SignupActivity" />
-      <activity android:name=".view.SigninActivity">
+      <activity android:name=".view.SplashBackgroundActitvity" android:theme="@style/SplashTheme">
          <intent-filter>
             <action android:name="android.intent.action.MAIN" />
 
             <category android:name="android.intent.category.LAUNCHER" />
          </intent-filter>
       </activity>
+      <activity android:name=".view.PlayMesageActivity" />
+      <activity android:name=".login.ProfileActivity" />
+      <activity android:name=".view.HomeActivity"/>
+      <activity android:name=".login.SignupActivity" />
+      <activity android:name=".login.LoginActivity" />
       <activity android:name=".view.ChatsGrActivity" />
-      <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
-         android:theme="@style/Base.Theme.AppCompat"/>
+      <activity
+         android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+         android:theme="@style/Base.Theme.AppCompat" />
    </application>
 
 </manifest>

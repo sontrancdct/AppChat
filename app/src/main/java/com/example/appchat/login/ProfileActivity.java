@@ -1,33 +1,24 @@
-package com.example.appchat.view;
+package com.example.appchat.login;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.app.ProgressDialog;
-import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.webkit.MimeTypeMap;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.appchat.R;
 import com.example.appchat.model.Account;
-import com.google.android.gms.tasks.Continuation;
+import com.example.appchat.view.HomeActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,14 +26,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
-import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
-
-import java.util.HashMap;
-import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -53,7 +39,6 @@ public class ProfileActivity extends AppCompatActivity {
    private ProgressDialog loadingBar;
    private Toolbar toolbar;
 
-   DatabaseReference databaseReference;
    StorageReference storageReference;
 
    private static final int IMAGE_REQUEST = 1;
@@ -67,19 +52,15 @@ public class ProfileActivity extends AppCompatActivity {
 
       loadingBar = new ProgressDialog(this);
 
-      toolbar = findViewById(R.id.toolbar);
-      setSupportActionBar(toolbar);
-      getSupportActionBar().setTitle("Profile");
-      getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-      getSupportActionBar().setHomeAsUpIndicator(R.drawable.back);
+      setUpToolbar();
 
       imageViewProfile = findViewById(R.id.set_profile_image);
       tvUsername = findViewById(R.id.set_username);
-
       storageReference = FirebaseStorage.getInstance().getReference().child("Profile Images");
       account = (Account) getIntent().getSerializableExtra("Account");
-      databaseReference = FirebaseDatabase.getInstance().getReference("Account").child(account.getUserName());
-      databaseReference.addValueEventListener(new ValueEventListener() {
+      FirebaseDatabase.getInstance().getReference("Account")
+         .child(account.getUserName())
+         .addValueEventListener(new ValueEventListener() {
          @Override
          public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
             account = dataSnapshot.getValue(Account.class);
@@ -104,8 +85,22 @@ public class ProfileActivity extends AppCompatActivity {
             OpenImage();
          }
       });
+   }
+
+   @Override
+   public void onBackPressed() {
+      super.onBackPressed();
+   }
+
+   private void setUpToolbar() {
+      toolbar = findViewById(R.id.toolBar);
+      setSupportActionBar(toolbar);
+      getSupportActionBar().setTitle("Profile");
+      getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+      getSupportActionBar().setHomeAsUpIndicator(R.drawable.back);
 
    }
+
    private void OpenImage() {
       Intent intent = new Intent();
       intent.setType("image/*");
@@ -129,7 +124,7 @@ public class ProfileActivity extends AppCompatActivity {
          if(resultCode == RESULT_OK)
          {
             loadingBar.setTitle("Set Profile Image");
-            loadingBar.setMessage("Please wait,...");
+            loadingBar.setMessage("Please wait...");
             loadingBar.setCanceledOnTouchOutside(false);
             loadingBar.show();
 
@@ -175,11 +170,5 @@ public class ProfileActivity extends AppCompatActivity {
          }
 
       }
-   }
-   private void SendUserToActivityMain() {
-      Intent intent = new Intent(ProfileActivity.this, HomeActivity.class);
-      intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-      startActivity(intent);
-      finish();
    }
 }

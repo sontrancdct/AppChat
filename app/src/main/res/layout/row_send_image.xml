@@ -4,6 +4,11 @@
    android:layout_height="wrap_content"
    android:gravity="end">
    <LinearLayout
+      android:orientation="horizontal"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content">
+   <LinearLayout
+      android:layout_weight="1"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:orientation="vertical"
@@ -17,34 +22,45 @@
          android:text="username"
          android:id="@+id/txtusername"
          android:textSize="12sp"
-         android:visibility="gone"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
          android:layout_marginRight="10dp"/>
-      <de.hdodenhof.circleimageview.CircleImageView
+
+      <ImageView
+         android:id="@+id/imgPicture"
+         android:layout_width="300dp"
+         android:layout_height="400dp"
+         android:src="#111"
+         android:scaleType="centerCrop"
+         android:layout_marginTop="3dp"
+         android:layout_marginEnd="10dp"
+         android:layout_marginRight="10dp" />
+      <TextView
          android:layout_gravity="right"
+         android:textSize="12sp"
+         android:id="@+id/txtDate"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:text="12:15 AM"
+         android:layout_marginEnd="15dp"
+         android:layout_marginRight="15dp" />
+   </LinearLayout>
+      <de.hdodenhof.circleimageview.CircleImageView
          android:id="@+id/item_profile_image"
-         android:visibility="gone"
          android:layout_width="45dp"
          android:layout_height="45dp"
-         android:src="@drawable/profile_image" />
+         android:src="@drawable/profile_image"
+         android:layout_marginEnd="5dp"
+         android:layout_marginTop="10dp"
+         android:layout_marginLeft="5dp"
+         android:layout_marginRight="5dp" />
+   </LinearLayout>
    <ImageView
-      android:id="@+id/imgPicture"
-      android:layout_width="300dp"
-      android:layout_height="400dp"
-      android:src="#111"
-      android:scaleType="centerCrop"
-      android:layout_marginTop="3dp"
-      android:layout_marginEnd="10dp"
-      android:layout_marginRight="10dp" />
-   <TextView
-      android:layout_gravity="right"
-      android:textSize="12sp"
-      android:id="@+id/txtDate"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="12:15 AM"
-      android:layout_marginEnd="15dp"
-      android:layout_marginRight="15dp" />
-</LinearLayout>
+      android:id="@+id/delete_item_mesage"
+      android:layout_marginTop="10dp"
+      android:visibility="gone"
+      android:layout_gravity="center"
+      android:layout_width="30dp"
+      android:layout_height="30dp"
+      android:src="@drawable/delete" />
 </LinearLayout>
