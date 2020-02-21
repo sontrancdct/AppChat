@@ -1,12 +1,23 @@
 package com.example.appchat.model;
 
-public class ChatGroup {
+public class Message {
    private String userName;
    private int    type;
    private String message;
    private String path;
    private long   date;
    boolean isChecked = false;
+   private String avatar;
+
+   public Message() {
+   }
+   public String getAvatar() {
+      return avatar;
+   }
+
+   public void setAvatar(String avatar) {
+      this.avatar = avatar;
+   }
 
    public boolean isChecked() {
       return isChecked;
@@ -15,8 +26,7 @@ public class ChatGroup {
    public void setChecked(boolean checked) {
       isChecked = checked;
    }
-   public ChatGroup() {
-   }
+
 
    public String getUserName() {
       return userName;
@@ -57,5 +67,6 @@ public class ChatGroup {
    public void setDate(long date) {
       this.date = date;
    }
+
 }
 

@@ -15,14 +15,14 @@
       android:id="@+id/toolBar"
       android:layout_gravity="top">
    </androidx.appcompat.widget.Toolbar>
-   <TextView
-      android:textStyle="bold"
-      android:text=""
-      android:textSize="20sp"
-      android:layout_gravity="center"
-      android:id="@+id/tv_play"
-      android:layout_width="30sp"
-      android:layout_height="30sp"/>
+<!--   <TextView-->
+<!--      android:textStyle="bold"-->
+<!--      android:text=""-->
+<!--      android:textSize="20sp"-->
+<!--      android:layout_gravity="center"-->
+<!--      android:id="@+id/tv_play"-->
+<!--      android:layout_width="30sp"-->
+<!--      android:layout_height="30sp"/>-->
       <androidx.recyclerview.widget.RecyclerView
          android:id="@+id/recyclerPlayMessage"
          android:layout_width="match_parent"

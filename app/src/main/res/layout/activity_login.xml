@@ -25,20 +25,20 @@
          android:layout_marginLeft="10dp"
          android:textSize="16sp"
          android:text="Username"
-         android:layout_width="80dp"
+         android:layout_width="100dp"
          android:layout_height="wrap_content"/>
-   <EditText
-      android:id="@+id/edtUsername"
-      android:layout_width="match_parent"
-      android:layout_height="40dp"
-      android:hint="Username..."
-      android:textColor="#ffffff"
-      android:layout_marginEnd="20dp"
-      android:paddingStart="15dp"
-      android:paddingEnd="15dp"
-      android:singleLine="true"
-      android:background="@drawable/ic_custom_edittext"
-      android:layout_marginRight="20dp" />
+      <EditText
+         android:id="@+id/edtUsername"
+         android:layout_width="match_parent"
+         android:layout_height="40dp"
+         android:hint="Username..."
+         android:textColor="#ffffff"
+         android:layout_marginEnd="20dp"
+         android:paddingStart="15dp"
+         android:paddingEnd="15dp"
+         android:singleLine="true"
+         android:background="@drawable/ic_custom_edittext"
+         android:layout_marginRight="20dp" />
    </LinearLayout>
    <LinearLayout
       android:layout_marginTop="20dp"
@@ -51,22 +51,31 @@
          android:layout_marginLeft="10dp"
          android:textSize="16sp"
          android:text="Password"
-         android:layout_width="80dp"
+         android:layout_width="100dp"
          android:layout_height="wrap_content"/>
-   <EditText
-      android:id="@+id/edtPassword"
-      android:layout_width="match_parent"
-      android:layout_height="40dp"
-      android:hint="Password..."
-      android:textColor="#ffffff"
-      android:layout_marginEnd="20dp"
-      android:paddingStart="15dp"
-      android:paddingEnd="15dp"
-      android:singleLine="true"
-      android:inputType="textPassword"
-      android:background="@drawable/ic_custom_edittext"
-      android:layout_marginRight="20dp" />
+      <EditText
+         android:id="@+id/edtPassword"
+         android:layout_width="match_parent"
+         android:layout_height="40dp"
+         android:hint="Password..."
+         android:textColor="#ffffff"
+         android:layout_marginEnd="20dp"
+         android:paddingStart="15dp"
+         android:paddingEnd="15dp"
+         android:singleLine="true"
+         android:inputType="textPassword"
+         android:background="@drawable/ic_custom_edittext"
+         android:layout_marginRight="20dp" />
    </LinearLayout>
+   <CheckBox
+      android:id="@+id/save_login"
+      android:layout_marginTop="20dp"
+      android:layout_gravity="center"
+      android:text="Save login"
+      android:textSize="15sp"
+
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"/>
    <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="40dp"

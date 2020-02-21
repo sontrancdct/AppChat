@@ -96,9 +96,8 @@ public class ProfileActivity extends AppCompatActivity {
       toolbar = findViewById(R.id.toolBar);
       setSupportActionBar(toolbar);
       getSupportActionBar().setTitle("Profile");
-      getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-      getSupportActionBar().setHomeAsUpIndicator(R.drawable.back);
-
+//      getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//      getSupportActionBar().setHomeAsUpIndicator(R.drawable.back);
    }
 
    private void OpenImage() {
@@ -137,8 +136,6 @@ public class ProfileActivity extends AppCompatActivity {
                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
                   if(task.isSuccessful())
                   {
-                     Toast.makeText(ProfileActivity.this, "Profile Image Uploaded Successfully", Toast.LENGTH_SHORT).show();
-
                      final String downloadUrl = task.getResult().getDownloadUrl().toString();
                      FirebaseDatabase.getInstance().getReference().child("Account").child(account.getUserName()).child("avatar")
                         .setValue(downloadUrl)
@@ -147,8 +144,9 @@ public class ProfileActivity extends AppCompatActivity {
                            public void onComplete(@NonNull Task<Void> task) {
                               if(task.isSuccessful())
                               {
-                                 Toast.makeText(ProfileActivity.this, "Image save in Database, Successfully", Toast.LENGTH_SHORT).show();
+                                 Toast.makeText(ProfileActivity.this, "Profile Image Uploaded Successfully", Toast.LENGTH_SHORT).show();
                                  loadingBar.dismiss();
+                                 startActivity(new Intent(ProfileActivity.this, HomeActivity.class));
                               }
                               else
                               {

@@ -2,12 +2,22 @@ package com.example.appchat.model;
 
 import java.io.Serializable;
 
-public class Room implements Serializable {
+public class Group implements Serializable {
 
    private String id;
    private String name;
 
-   public Room() {
+   boolean isChecked = false;
+
+   public Group() {
+   }
+
+   public boolean isChecked() {
+      return isChecked;
+   }
+
+   public void setChecked(boolean checked) {
+      isChecked = checked;
    }
 
    public String getId() {

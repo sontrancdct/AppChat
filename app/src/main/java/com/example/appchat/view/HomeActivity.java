@@ -22,7 +22,7 @@ import com.example.appchat.adapter.GroupsListAdapter;
 import com.example.appchat.login.ProfileActivity;
 import com.example.appchat.login.LoginActivity;
 import com.example.appchat.model.Account;
-import com.example.appchat.model.Room;
+import com.example.appchat.model.Group;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -36,7 +36,7 @@ public class HomeActivity extends AppCompatActivity {
    private RecyclerView recyclerRoom;
    private Account myAccount;
    private GroupsListAdapter groupsListAdapter;
-   private ArrayList<Room> rooms = new ArrayList<>();
+   private ArrayList<Group> groups = new ArrayList<>();
    private AlertDialog alertDialog;
 
    @Override
@@ -72,7 +72,7 @@ public class HomeActivity extends AppCompatActivity {
       recyclerRoom = findViewById(R.id.recyclerRoom);
       recyclerRoom.setHasFixedSize(true);
       recyclerRoom.setLayoutManager(new LinearLayoutManager(this));
-      groupsListAdapter = new GroupsListAdapter(rooms,myAccount);
+      groupsListAdapter = new GroupsListAdapter(groups,myAccount);
       recyclerRoom.setAdapter(groupsListAdapter);
    }
 
@@ -83,7 +83,7 @@ public class HomeActivity extends AppCompatActivity {
    private void setToolbar() {
       toolbar = findViewById(R.id.toolBar);
       setSupportActionBar(toolbar);
-      getSupportActionBar().setTitle("AppChat");
+      getSupportActionBar().setTitle("Chat++");
    }
 
    private void getRoomList() {
@@ -94,10 +94,10 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                if (dataSnapshot.exists()){
-                  Room room = dataSnapshot.getValue(Room.class);
+                  Group group = dataSnapshot.getValue(Group.class);
 
-                  rooms.add(room);
-                  groupsListAdapter.notifyItemInserted(rooms.size() - 1);
+                  groups.add(group);
+                  groupsListAdapter.notifyItemInserted(groups.size() - 1);
                }
             }
 
@@ -122,39 +122,16 @@ public class HomeActivity extends AppCompatActivity {
             }
          });
    }
-   public void onClickAddRoom(View view) {
-      AlertDialog.Builder builder = new AlertDialog.Builder(this);
-      View container = LayoutInflater.from(this).inflate(R.layout.dialog_add_groups,null);
-      builder.setView(container);
-      alertDialog = builder.create();
-
-      final EditText edtRoomName = container.findViewById(R.id.edtRoomName);
-      Button btnCreate = container.findViewById(R.id.btnCreate);
-
-      btnCreate.setOnClickListener(new View.OnClickListener()
-      {
-         @Override
-         public void onClick(View v) {
-            if (TextUtils.isEmpty(edtRoomName.getText())){
-               Toast.makeText(HomeActivity.this, "Please enter name groups...", Toast.LENGTH_SHORT).show();
-               return;
-            }
-            createGroups(edtRoomName.getText().toString());
-         }
-      });
-      alertDialog.show();
-
-   }
    private void createGroups(String groupsName) {
       String id = System.currentTimeMillis() + "";
-      final Room room = new Room();
-      room.setId(id);
-      room.setName(groupsName);
+      final Group group = new Group();
+      group.setId(id);
+      group.setName(groupsName);
       FirebaseDatabase.getInstance().getReference()
          .child("GroupsList")
          .child(myAccount.getUserName())
          .child(id)
-         .setValue(room, new DatabaseReference.CompletionListener() {
+         .setValue(group, new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
                if (databaseError == null){

@@ -13,26 +13,23 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.example.appchat.Constants;
 import com.example.appchat.R;
 import com.example.appchat.adapter.GroupsChatAdapter;
 import com.example.appchat.model.Account;
-import com.example.appchat.model.ChatGroup;
-import com.example.appchat.model.Room;
+import com.example.appchat.model.Message;
+import com.example.appchat.model.Group;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -56,9 +53,9 @@ public class ChatsGrActivity extends AppCompatActivity {
    private EditText edtMessage;
    private RecyclerView recyclerMessage;
    private GroupsChatAdapter groupsChatAdapter;
-   private ArrayList<ChatGroup> chatGroups = new ArrayList<>();
+   private ArrayList<Message> messages = new ArrayList<>();
    private Account myAccount;
-   private Room room;
+   private Group group;
    private AlertDialog alertDialog;
 
    @Override
@@ -76,16 +73,16 @@ public class ChatsGrActivity extends AppCompatActivity {
 
    private void getMessage() {
       FirebaseDatabase.getInstance().getReference()
-         .child("ChatGroup")
-         .child(room.getId())
+         .child("Message")
+         .child(group.getId())
          .addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                if (dataSnapshot.exists()){
-                  ChatGroup chatGroup = dataSnapshot.getValue(ChatGroup.class);
-                  chatGroups.add(chatGroup);
-                  groupsChatAdapter.notifyItemInserted(chatGroups.size() - 1);
-                  recyclerMessage.smoothScrollToPosition(chatGroups.size() - 1);
+                  Message message = dataSnapshot.getValue(Message.class);
+                  messages.add(message);
+                  groupsChatAdapter.notifyItemInserted(messages.size() - 1);
+                  recyclerMessage.smoothScrollToPosition(messages.size() - 1);
                }
             }
 
@@ -116,16 +113,17 @@ public class ChatsGrActivity extends AppCompatActivity {
       LinearLayoutManager ll = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
       ll.setStackFromEnd(true);
       recyclerMessage.setLayoutManager(ll);
-      groupsChatAdapter = new GroupsChatAdapter(chatGroups,myAccount);
+      groupsChatAdapter = new GroupsChatAdapter(messages,myAccount, group);
       recyclerMessage.setAdapter(groupsChatAdapter);
+
    }
 
    private void updateToolbar() {
-      getSupportActionBar().setTitle(room.getName());
+      getSupportActionBar().setTitle(group.getName());
    }
 
    private void getIntentData() {
-      room        = (Room) getIntent().getSerializableExtra("GroupsList");
+      group = (Group) getIntent().getSerializableExtra("GroupsList");
       myAccount   = (Account) getIntent().getSerializableExtra("Account");
    }
 
@@ -141,23 +139,24 @@ public class ChatsGrActivity extends AppCompatActivity {
       recyclerMessage = findViewById(R.id.recyclerMessage);
    }
    public void onClickSentMessage(View view) {
-      String message = edtMessage.getText().toString();
+      String textMessage = edtMessage.getText().toString();
 
-      if (TextUtils.isEmpty(message)){
+      if (TextUtils.isEmpty(textMessage)){
          return;
       }
       long time = System.currentTimeMillis();
 
-      ChatGroup chatGroup = new ChatGroup();
-      chatGroup.setDate(time);
-      chatGroup.setMessage(message);
-      chatGroup.setUserName(myAccount.getUserName());
-      chatGroup.setType(Constants.TYPE_MESSAGE);
+      Message message = new Message();
+      message.setDate(time);
+      message.setMessage(textMessage);
+      message.setUserName(myAccount.getUserName());
+      message.setType(Constants.TYPE_MESSAGE);
+      message.setAvatar(myAccount.getAvatar());
       FirebaseDatabase.getInstance().getReference()
-         .child("ChatGroup")
-         .child(room.getId())
+         .child("Message")
+         .child(group.getId())
          .child(time + "")
-         .setValue(chatGroup);
+         .setValue(message);
       edtMessage.setText("");
    }
 
@@ -212,8 +211,8 @@ public class ChatsGrActivity extends AppCompatActivity {
       FirebaseDatabase.getInstance().getReference()
          .child("GroupsList")
          .child(userName)
-         .child(room.getId())
-         .setValue(room, new DatabaseReference.CompletionListener() {
+         .child(group.getId())
+         .setValue(group, new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
                if (databaseError == null){
@@ -285,17 +284,18 @@ public class ChatsGrActivity extends AppCompatActivity {
 
                   long time = System.currentTimeMillis();
 
-                  ChatGroup chatGroup = new ChatGroup();
-                  chatGroup.setDate(time);
-                  chatGroup.setPath(pathPicture);
-                  chatGroup.setUserName(myAccount.getUserName());
-                  chatGroup.setType(Constants.TYPE_PICTURE);
+                  Message message = new Message();
+                  message.setDate(time);
+                  message.setPath(pathPicture);
+                  message.setUserName(myAccount.getUserName());
+                  message.setType(Constants.TYPE_PICTURE);
+                  message.setAvatar(myAccount.getAvatar());
 
                   FirebaseDatabase.getInstance().getReference()
-                     .child("ChatGroup")
-                     .child(room.getId())
+                     .child("Message")
+                     .child(group.getId())
                      .child(time + "")
-                     .setValue(chatGroup);
+                     .setValue(message);
                }
             })
             .addOnFailureListener(new OnFailureListener() {
@@ -305,4 +305,6 @@ public class ChatsGrActivity extends AppCompatActivity {
             });
       }
    }
+
+
 }

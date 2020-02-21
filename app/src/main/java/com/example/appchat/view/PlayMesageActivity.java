@@ -12,12 +12,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.appchat.R;
 import com.example.appchat.adapter.GroupsChatAdapter;
 import com.example.appchat.model.Account;
-import com.example.appchat.model.ChatGroup;
-import com.example.appchat.model.Room;
+import com.example.appchat.model.Message;
+import com.example.appchat.model.Group;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,14 +32,10 @@ import java.util.TimerTask;
 public class PlayMesageActivity extends AppCompatActivity {
 
    private Toolbar toolBar;
-   private Room room;
+   private Group group;
    private Account myAccount;
    private GroupsChatAdapter groupsChatAdapter;
-   private ArrayList<ChatGroup> chatGroups = new ArrayList<>();
-
-   private Timer mTimer1;
-   private TimerTask mTt1;
-   private Handler mTimerHandler = new Handler();
+   private ArrayList<Message> messages = new ArrayList<>();
 
    private RecyclerView recyclerView;
 
@@ -49,15 +46,15 @@ public class PlayMesageActivity extends AppCompatActivity {
       setContentView(R.layout.activity_play_mesage);
       setToolbar();
       getIntentData();
-      getSupportActionBar().setTitle(room.getName());
-      timeStart();
+      getSupportActionBar().setTitle(group.getName());
+      //timeStart();
       createRecycler();
       getMessage();
 
    }
 
    private void getIntentData() {
-      room        = (Room) getIntent().getSerializableExtra("GroupsList");
+      group = (Group) getIntent().getSerializableExtra("GroupsList");
       myAccount   = (Account) getIntent().getSerializableExtra("Account");
    }
 
@@ -92,16 +89,6 @@ public class PlayMesageActivity extends AppCompatActivity {
    private void setToolbar() {
       toolBar = findViewById(R.id.toolBar);
       setSupportActionBar(toolBar);
-      getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-      getSupportActionBar().setDisplayShowHomeEnabled(true);
-
-      getSupportActionBar().setHomeAsUpIndicator(R.drawable.back);
-      toolBar.setNavigationOnClickListener(new View.OnClickListener() {
-         @Override
-         public void onClick(View v) {
-            startActivity(new Intent(PlayMesageActivity.this, HomeActivity.class));
-         }
-      });
    }
    @Override
    public boolean onSupportNavigateUp() {
@@ -118,20 +105,20 @@ public class PlayMesageActivity extends AppCompatActivity {
       final int value = r.nextInt((MAX - MIN) + 1) + MIN;
 
       FirebaseDatabase.getInstance().getReference()
-         .child("ChatGroup")
-         .child(room.getId())
+         .child("Message")
+         .child(group.getId())
          .addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                if (dataSnapshot.exists()) {
-                  final ChatGroup chatGroup = dataSnapshot.getValue(ChatGroup.class);
+                  final Message message = dataSnapshot.getValue(Message.class);
 
                   handler.postDelayed(new Runnable() {
                      @Override
                      public void run() {
-                        chatGroups.add(chatGroup);
-                        groupsChatAdapter.notifyItemInserted(chatGroups.size() - 1);
-                        recyclerView.smoothScrollToPosition(chatGroups.size() - 1);
+                        messages.add(message);
+                        groupsChatAdapter.notifyItemInserted(messages.size() - 1);
+                        recyclerView.smoothScrollToPosition(messages.size() - 1);
                      }
                   }, (delay += value));
                }
@@ -164,7 +151,7 @@ public class PlayMesageActivity extends AppCompatActivity {
       LinearLayoutManager ll = new LinearLayoutManager(this,RecyclerView.VERTICAL,false);
       ll.setStackFromEnd(true);
       recyclerView.setLayoutManager(ll);
-      groupsChatAdapter = new GroupsChatAdapter(chatGroups,myAccount);
+      groupsChatAdapter = new GroupsChatAdapter(messages,myAccount, group);
       recyclerView.setAdapter(groupsChatAdapter);
    }
 

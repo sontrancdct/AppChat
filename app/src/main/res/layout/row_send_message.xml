@@ -22,18 +22,20 @@
          android:text="username"
          android:id="@+id/txtusername"
          android:textSize="12sp"
+         android:textColor="#f12"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
-         android:layout_marginRight="10dp"/>
+         android:layout_marginRight="5dp"/>
       <TextView
          android:id="@+id/txtMessage"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
-         android:layout_marginLeft="15dp"
          android:layout_marginRight="5dp"
          android:gravity="left"
-         android:paddingTop="4dp"
-         android:paddingBottom="4dp"
+         android:paddingStart="15dp"
+         android:paddingEnd="15dp"
+         android:paddingTop="2dp"
+         android:paddingBottom="5dp"
          android:text="Heaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaallo"
          android:textColor="#fff"
          android:textSize="20sp" />
