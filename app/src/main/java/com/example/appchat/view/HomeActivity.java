@@ -76,7 +76,7 @@ public class HomeActivity extends AppCompatActivity {
       recyclerRoom.setAdapter(groupsListAdapter);
    }
 
-   private void getIntentData() {
+   public void getIntentData() {
       myAccount = (Account) getIntent().getSerializableExtra("Account");
    }
 

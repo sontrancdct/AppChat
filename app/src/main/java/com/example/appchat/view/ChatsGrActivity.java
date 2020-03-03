@@ -123,7 +123,7 @@ public class ChatsGrActivity extends AppCompatActivity {
    }
 
    private void getIntentData() {
-      group = (Group) getIntent().getSerializableExtra("GroupsList");
+      group = (Group) getIntent().getSerializableExtra("Conversation");
       myAccount   = (Account) getIntent().getSerializableExtra("Account");
    }
 

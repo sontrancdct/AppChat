@@ -47,7 +47,7 @@ public class GroupsListAdapter extends RecyclerView.Adapter<GroupsListAdapter.Vi
          @Override
          public void onClick(View v) {
             Intent intent = new Intent(v.getContext(), ChatsGrActivity.class);
-            intent.putExtra("GroupsList", groups.get(position));
+            intent.putExtra("Conversation", groups.get(position));
             intent.putExtra("Account", account);
             v.getContext().startActivity(intent);
          }
@@ -77,7 +77,7 @@ public class GroupsListAdapter extends RecyclerView.Adapter<GroupsListAdapter.Vi
          @Override
          public void onClick(View v) {
             Intent intent = new Intent(v.getContext(), PlayMesageActivity.class);
-            intent.putExtra("GroupsList", groups.get(position));
+            intent.putExtra("Conversation", groups.get(position));
             intent.putExtra("Account", account);
             v.getContext().startActivity(intent);
             holder.container.setVisibility(View.GONE);
@@ -88,7 +88,7 @@ public class GroupsListAdapter extends RecyclerView.Adapter<GroupsListAdapter.Vi
          @Override
          public void onClick(View v) {
             FirebaseDatabase.getInstance().getReference()
-               .child("GroupsList")
+               .child("Conversation")
                .child(account.getUserName())
                .addListenerForSingleValueEvent(new ValueEventListener() {
                   @Override

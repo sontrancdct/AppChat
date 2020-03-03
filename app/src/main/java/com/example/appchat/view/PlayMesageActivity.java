@@ -58,33 +58,33 @@ public class PlayMesageActivity extends AppCompatActivity {
       myAccount   = (Account) getIntent().getSerializableExtra("Account");
    }
 
-   private void timeStart() {
-      final TextView textView = findViewById(R.id.tv_play);
-      Thread thread = new Thread(){
-         @Override
-         public void run() {
-            while (!isInterrupted())
-            {
-               try {
-                  Thread.sleep(1000);
-
-                  runOnUiThread(new Runnable() {
-                     @Override
-                     public void run() {
-                        count++;
-                        textView.setText(String.valueOf(count));
-                     }
-                  });
-
-               } catch (InterruptedException e) {
-                  e.printStackTrace();
-               }
-            }
-            super.run();
-         }
-      };
-      thread.start();
-   }
+//   private void timeStart() {
+//      final TextView textView = findViewById(R.id.tv_play);
+//      Thread thread = new Thread(){
+//         @Override
+//         public void run() {
+//            while (!isInterrupted())
+//            {
+//               try {
+//                  Thread.sleep(1000);
+//
+//                  runOnUiThread(new Runnable() {
+//                     @Override
+//                     public void run() {
+//                        count++;
+//                        textView.setText(String.valueOf(count));
+//                     }
+//                  });
+//
+//               } catch (InterruptedException e) {
+//                  e.printStackTrace();
+//               }
+//            }
+//            super.run();
+//         }
+//      };
+//      thread.start();
+//   }
 
    private void setToolbar() {
       toolBar = findViewById(R.id.toolBar);

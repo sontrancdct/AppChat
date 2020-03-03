@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.example.appchat.R;
 import com.example.appchat.model.Account;
 import com.example.appchat.view.HomeActivity;
+import com.example.appchat.view.MainActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -75,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
                Toast.makeText(LoginActivity.this, "Login success", Toast.LENGTH_SHORT).show();
                loadingBar.dismiss();
 
-               Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+               Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                intent.putExtra("Account", account);
                startActivity(intent);
