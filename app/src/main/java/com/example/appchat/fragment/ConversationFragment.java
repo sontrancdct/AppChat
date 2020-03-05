@@ -18,10 +18,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.appchat.R;
 import com.example.appchat.adapter.GroupsListAdapter;
+import com.example.appchat.appdata.AppChatData;
+import com.example.appchat.appdata.AppChatUtil;
 import com.example.appchat.model.Account;
 import com.example.appchat.model.Group;
 import com.example.appchat.view.HomeActivity;
@@ -44,8 +47,22 @@ public class ConversationFragment extends Fragment {
    private GroupsListAdapter groupsListAdapter;
    private ArrayList<Group> groups = new ArrayList<>();
    private AlertDialog alertDialog;
-   private ImageButton btnAddNewGroups ;
+   private ImageButton add_Conversation ;
 
+   private AppChatData appChatData;
+
+
+//   public ConversationFragment() {
+//      appChatData = AppChatUtil.loadAppChatData();
+////      appChatData.listAccount;
+////      appChatData.listGroup;
+//   }
+//
+//   public void addNewGroup() {
+//      Group group = new Group();
+//      appChatData.listGroup.add(group);
+//      AppChatUtil.saveAppChatData(appChatData);
+//   }
 
 
    @Override
@@ -56,15 +73,15 @@ public class ConversationFragment extends Fragment {
       recyclerRoom = view.findViewById(R.id.recyclerConversation);
       setRecyclerConversation();
 
-      btnAddNewGroups = view.findViewById(R.id.add_Conversation);
-      btnAddNewGroups.setOnClickListener(new View.OnClickListener() {
+
+      getRoomList();
+      add_Conversation = view.findViewById(R.id.add_Conversation);
+      add_Conversation.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View v) {
             createNewGroups();
          }
       });
-
-      getRoomList();
 
       return view;
    }
@@ -118,7 +135,6 @@ public class ConversationFragment extends Fragment {
          });
    }
    public void passData() {
-
 
    }
 

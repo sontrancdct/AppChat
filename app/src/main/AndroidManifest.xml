@@ -15,7 +15,8 @@
       android:supportsRtl="true"
       android:theme="@style/AppTheme"
       tools:ignore="GoogleAppIndexingWarning">
-      <activity android:name=".view.MainActivity"></activity>
+      <activity android:name=".login.RegisterActivity"></activity>
+      <activity android:name=".view.MainActivity" />
       <activity
          android:name=".view.SplashBackgroundActitvity"
          android:theme="@style/SplashTheme">
@@ -28,7 +29,6 @@
       <activity android:name=".view.PlayMesageActivity" />
       <activity android:name=".login.ProfileActivity" />
       <activity android:name=".view.HomeActivity" />
-      <activity android:name=".login.SignupActivity" />
       <activity android:name=".login.LoginActivity" />
       <activity android:name=".view.ChatsGrActivity" />
       <activity

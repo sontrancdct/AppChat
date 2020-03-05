@@ -20,19 +20,27 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.appchat.Constants;
 import com.example.appchat.R;
 import com.example.appchat.adapter.GroupsChatAdapter;
+import com.example.appchat.adapter.UserAdapter;
+import com.example.appchat.appdata.AppChatData;
+import com.example.appchat.appdata.AppChatUtil;
+import com.example.appchat.dialog.AddNewUserDiglog;
 import com.example.appchat.model.Account;
 import com.example.appchat.model.Message;
 import com.example.appchat.model.Group;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -58,10 +66,28 @@ public class ChatsGrActivity extends AppCompatActivity {
    private Group group;
    private AlertDialog alertDialog;
 
+   ValueEventListener listener;
+   ArrayAdapter adapter;
+   ArrayList<Account> accounts = new ArrayList<>();
+
+   DatabaseReference databaseReference;
+   private AppChatData appChatData;
+
+
+   private RecyclerView recyclerView;
+
+   private UserAdapter userAdapter;
+
+
+
    @Override
    protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
       setContentView(R.layout.activity_chats_gr);
+
+      appChatData = AppChatUtil.loadAppChatData();
+
+      databaseReference = FirebaseDatabase.getInstance().getReference("Account");
 
       init();
       setUpToolBar();
@@ -69,6 +95,34 @@ public class ChatsGrActivity extends AppCompatActivity {
       updateToolbar();
       createRecycler();
       getMessage();
+
+      Spinner s = (Spinner) findViewById(R.id.spinner);
+      adapter = new ArrayAdapter<Account>(ChatsGrActivity.this,R.layout.support_simple_spinner_dropdown_item,accounts);
+      s.setAdapter(adapter);
+      Retrivedata();
+
+
+   }
+   public void Retrivedata(){
+//      appChatData.listAccount ->
+
+      listener = databaseReference.addValueEventListener(new ValueEventListener() {
+         @Override
+         public void onDataChange(DataSnapshot dataSnapshot) {
+            accounts.clear();
+            for(DataSnapshot snapshot : dataSnapshot.getChildren() ){
+               Account account = snapshot.getValue(Account.class);
+
+               accounts.add(account);
+            }
+            adapter.notifyDataSetChanged();
+         }
+
+         @Override
+         public void onCancelled(DatabaseError databaseError) {
+
+         }
+      });
    }
 
    private void getMessage() {
@@ -161,30 +215,39 @@ public class ChatsGrActivity extends AppCompatActivity {
    }
 
    public void onClickAdd(MenuItem item) {
-      AlertDialog.Builder builder = new AlertDialog.Builder(this);
-      View container = LayoutInflater.from(this).inflate(R.layout.dialog_add_friend,null);
-      builder.setView(container);
-      alertDialog = builder.create();
+      AddNewUserDiglog addNewUserDiglog = new AddNewUserDiglog(ChatsGrActivity.this);
+      addNewUserDiglog.show();
+//      AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//      View container = LayoutInflater.from(this).inflate(R.layout.dialog_add_friend,null);
+//      builder.setView(container);
+//      alertDialog = builder.create();
+//
+//      final EditText edtUsername    = container.findViewById(R.id.edtUsername);
+//      Button btnCreate        = container.findViewById(R.id.btnCreate);
+//
+//      btnCreate.setOnClickListener(new View.OnClickListener() {
+//         @Override
+//         public void onClick(View v) {
+//            String userName = edtUsername.getText().toString();
+//
+//            if (TextUtils.isEmpty(userName)){
+//               Toast.makeText(ChatsGrActivity.this, "Please enter username !", Toast.LENGTH_SHORT).show();
+//               return;
+//            }
+//
+//            checkAccount(userName);
+//         }
+//      });
 
-      final EditText edtUsername    = container.findViewById(R.id.edtUsername);
-      Button btnCreate        = container.findViewById(R.id.btnCreate);
-
-      btnCreate.setOnClickListener(new View.OnClickListener() {
-         @Override
-         public void onClick(View v) {
-            String userName = edtUsername.getText().toString();
-
-            if (TextUtils.isEmpty(userName)){
-               Toast.makeText(ChatsGrActivity.this, "Please enter username !", Toast.LENGTH_SHORT).show();
-               return;
-            }
-
-            checkAccount(userName);
-         }
-      });
-
-      alertDialog.show();
+//      recyclerView = findViewById(R.id.recyclerview_listusers);
+//     // recyclerView.setHasFixedSize(true);
+//      recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+//
+//      readUser();
+//      alertDialog.show();
    }
+
+
 
    private void checkAccount(final String userName) {
       FirebaseDatabase.getInstance().getReference()

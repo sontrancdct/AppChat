@@ -7,6 +7,12 @@ public class Account  implements Serializable {
    private String password;
    private String avatar;
 
+   public Account(String userName, String password, String avatar) {
+      this.userName = userName;
+      this.password = password;
+      this.avatar = avatar;
+   }
+
    public Account() {
    }
 

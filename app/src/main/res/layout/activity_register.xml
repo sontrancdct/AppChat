@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-   xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
    android:layout_width="match_parent"
    android:layout_height="match_parent"
    android:background="@drawable/gradient_background"
    android:orientation="vertical">
+
    <TextView
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:gravity="center"
-      android:text="Login"
+      android:text="Register"
       android:textColor="#009688"
       android:textSize="30sp"
       android:textStyle="bold"
@@ -28,6 +28,7 @@
          android:layout_width="100dp"
          android:layout_height="wrap_content"/>
       <EditText
+         android:layout_gravity=""
          android:id="@+id/edtUsername"
          android:layout_width="match_parent"
          android:layout_height="40dp"
@@ -53,58 +54,64 @@
          android:text="Password"
          android:layout_width="100dp"
          android:layout_height="wrap_content"/>
+
       <EditText
          android:id="@+id/edtPassword"
          android:layout_width="match_parent"
          android:layout_height="40dp"
          android:hint="Password..."
+         android:inputType="textPassword"
          android:textColor="#ffffff"
          android:layout_marginEnd="20dp"
          android:paddingStart="15dp"
          android:paddingEnd="15dp"
          android:singleLine="true"
-         android:inputType="textPassword"
          android:background="@drawable/ic_custom_edittext"
          android:layout_marginRight="20dp" />
    </LinearLayout>
-   <CheckBox
-      android:id="@+id/save_login"
-      android:layout_marginTop="20dp"
-      android:layout_gravity="center"
-      android:text="Save login"
-      android:textSize="15sp"
-
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"/>
    <LinearLayout
+      android:layout_marginTop="20dp"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal">
+      <TextView
+         android:textStyle="bold"
+         android:textColor="#3F51B5"
+         android:layout_marginLeft="10dp"
+         android:textSize="16sp"
+         android:text="Confirm"
+         android:layout_width="100dp"
+         android:layout_height="wrap_content"/>
+      <EditText
+         android:id="@+id/edtRePassword"
+         android:layout_width="match_parent"
+         android:layout_height="40dp"
+         android:hint="Confirm the password..."
+         android:inputType="textPassword"
+         android:textColor="#ffffff"
+         android:layout_marginEnd="20dp"
+         android:paddingStart="15dp"
+         android:paddingEnd="15dp"
+         android:singleLine="true"
+         android:background="@drawable/ic_custom_edittext"
+         android:layout_marginRight="20dp" />
+   </LinearLayout>
+   <Button
+      android:onClick="onClickSignup"
       android:layout_width="match_parent"
       android:layout_height="40dp"
+      android:text="Register now"
+      android:textColor="#fff"
+      android:layout_marginTop="20dp"
       android:layout_marginStart="20dp"
       android:layout_marginEnd="20dp"
+      android:background="@drawable/ic_custom_button" />
+   <TextView
+      android:id="@+id/have_account"
+      android:textSize="15sp"
       android:layout_marginTop="20dp"
-      android:weightSum="2"
-      android:orientation="horizontal">
-
-      <Button
-         android:onClick="onClickLogin"
-         android:layout_width="0dp"
-         android:layout_height="match_parent"
-         android:layout_weight="1"
-         android:text="Login"
-         android:textColor="#fff"
-         android:background="@drawable/ic_custom_button"
-         android:layout_marginEnd="10dp"
-         android:layout_marginRight="10dp" />
-      <Button
-         android:onClick="onClickSignup"
-         android:layout_width="0dp"
-         android:layout_height="match_parent"
-         android:layout_weight="1"
-         android:text="Signup"
-         android:textColor="#fff"
-         android:layout_marginStart="10dp"
-         android:background="@drawable/ic_custom_button"
-         android:layout_marginLeft="10dp" />
-   </LinearLayout>
-
+      android:gravity="center"
+      android:text="You have Account...?"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"/>
 </LinearLayout>

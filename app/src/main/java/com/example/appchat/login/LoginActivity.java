@@ -1,5 +1,4 @@
 package com.example.appchat.login;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -11,19 +10,14 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.example.appchat.R;
-import com.example.appchat.model.Account;
-import com.example.appchat.view.HomeActivity;
 import com.example.appchat.view.MainActivity;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
 
    private EditText edtUsername,edtPassword;
    private ProgressDialog loadingBar;
    private CheckBox saveLogin;
+   SharedPreferences sharedPreferences;
 
    String prefname ="data";
    @Override
@@ -41,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
    }
 
    public void onClickSignup(View view) {
-      startActivity(new Intent(this, SignupActivity.class));
+        startActivity(new Intent(this, RegisterActivity.class));
    }
 
    public void onClickLogin(View view) {
@@ -56,37 +50,68 @@ public class LoginActivity extends AppCompatActivity {
          loadingBar.dismiss();
          return;
       }
-      FirebaseDatabase.getInstance().getReference()
-         .child("Account")
-         .child(edtUsername.getText().toString())
-         .addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-               if (!dataSnapshot.exists()){
-                  Toast.makeText(LoginActivity.this, "Account not exists", Toast.LENGTH_SHORT).show();
-                  loadingBar.dismiss();
-                  return;
-               }
-               Account account = dataSnapshot.getValue(Account.class);
-               if (!account.getPassword().equals(edtPassword.getText().toString())){
-                  Toast.makeText(LoginActivity.this, "Password Incorrect", Toast.LENGTH_SHORT).show();
-                  loadingBar.dismiss();
-                  return;
-               }
-               Toast.makeText(LoginActivity.this, "Login success", Toast.LENGTH_SHORT).show();
-               loadingBar.dismiss();
+      sharedPreferences = getSharedPreferences("MyShared", MODE_PRIVATE);
+      String name = edtUsername.getText().toString();
+      String pass = edtPassword.getText().toString();
+      
+      //Account account = null;
 
-               Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-               intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-               intent.putExtra("Account", account);
-               startActivity(intent);
-               finish();
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+      String username1 = sharedPreferences.getString("username", "no");
+      String password2 = sharedPreferences.getString("password", "no");
 
-            }
-         });
+      if(username1.equals(name)){
+         if(password2.equals(pass)){
+            Toast.makeText(LoginActivity.this, "Login success", Toast.LENGTH_SHORT).show();
+            loadingBar.dismiss();
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            //  intent.putExtra("Account", account);
+            startActivity(intent);
+            finish();
+         }
+         else {
+            Toast.makeText(LoginActivity.this, "Password Incorrect", Toast.LENGTH_SHORT).show();
+            loadingBar.dismiss();
+            return;
+         }
+      }
+      else
+      {
+         Toast.makeText(LoginActivity.this, "Account not exists", Toast.LENGTH_SHORT).show();
+         loadingBar.dismiss();
+      }
+
+//      FirebaseDatabase.getInstance().getReference()
+//         .child("Account")
+//         .child(edtUsername.getText().toString())
+//         .addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//               if (!dataSnapshot.exists()){
+//                  Toast.makeText(LoginActivity.this, "Account not exists", Toast.LENGTH_SHORT).show();
+//                  loadingBar.dismiss();
+//                  return;
+//               }
+//               Account account = dataSnapshot.getValue(Account.class);
+//               if (!account.getPassword().equals(edtPassword.getText().toString())){
+//                  Toast.makeText(LoginActivity.this, "Password Incorrect", Toast.LENGTH_SHORT).show();
+//                  loadingBar.dismiss();
+//                  return;
+//               }
+//               Toast.makeText(LoginActivity.this, "Login success", Toast.LENGTH_SHORT).show();
+//               loadingBar.dismiss();
+//
+//               Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+//               intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//               intent.putExtra("Account", account);
+//               startActivity(intent);
+//               finish();
+//            }
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//         });
    }
    @Override
    protected void onPause() {

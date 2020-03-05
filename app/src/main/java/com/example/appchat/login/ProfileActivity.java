@@ -38,9 +38,7 @@ public class ProfileActivity extends AppCompatActivity {
    private TextView tvUsername;
    private ProgressDialog loadingBar;
    private Toolbar toolbar;
-
    StorageReference storageReference;
-
    private static final int IMAGE_REQUEST = 1;
    public Uri imageUri;
    private Account account;

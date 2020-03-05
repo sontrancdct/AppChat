@@ -12,7 +12,10 @@ import android.view.ViewGroup;
 
 import com.example.appchat.R;
 import com.example.appchat.adapter.UserAdapter;
+import com.example.appchat.appdata.AppChatData;
+import com.example.appchat.appdata.AppChatUtil;
 import com.example.appchat.model.Account;
+import com.example.appchat.utils.DkJsonHelper;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -31,10 +34,14 @@ public class UserFragment extends Fragment {
 
    private UserAdapter userAdapter;
    private ArrayList<Account> accounts = new ArrayList<>();
+   private AppChatData appChatData;
 
    @Override
    public View onCreateView(LayoutInflater inflater, ViewGroup container,
                             Bundle savedInstanceState) {
+
+      appChatData = AppChatUtil.loadAppChatData();
+      accounts = appChatData.listAccount;
 
       View view = inflater.inflate(R.layout.fragment_user, container, false);
       recyclerView = view.findViewById(R.id.recyclerview_users);
@@ -43,9 +50,12 @@ public class UserFragment extends Fragment {
 
       readUser();
 
-
-
       return view;
+   }
+
+   public void addNewUser(Account account) {
+      appChatData.listAccount.add(account);
+      AppChatUtil.saveAppChatData(appChatData);
    }
 
    private void readUser() {

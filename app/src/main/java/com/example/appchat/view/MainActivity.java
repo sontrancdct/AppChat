@@ -6,6 +6,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -13,6 +15,7 @@ import android.widget.ImageButton;
 import com.example.appchat.R;
 import com.example.appchat.adapter.GroupsListAdapter;
 import com.example.appchat.adapter.TabsAdapter;
+import com.example.appchat.appdata.AppChatUtil;
 import com.example.appchat.fragment.ConversationFragment;
 import com.example.appchat.model.Account;
 import com.example.appchat.model.Group;
@@ -31,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
    private ViewPager viewPager;
    private TabLayout tabLayout;
    private TabsAdapter tabsAdapter;
+
+   boolean session;
 
 
 
@@ -52,11 +57,20 @@ public class MainActivity extends AppCompatActivity {
       tabLayout.setupWithViewPager(viewPager);
 
 
-      Bundle b = new Bundle();
-      b.putString("Account", String.valueOf(myAccount));
-      tabsAdapter.setData(b);
-
-
+   }
+   public void SESSION(){
+      //I SET DEFAULT VALUE TO FALSE
+      //WHEN USER IS FIRST OPEN, I WILL SET FALSE
+      session = Boolean.parseBoolean(AppChatUtil.read(getApplicationContext(), "session", "false"));
+      if(session){
+         //here when user first or logout
+      }
+      else
+      {
+         //here when user logged in
+         //value here is true
+         //how the value can changed true
+      }
    }
 
 }
